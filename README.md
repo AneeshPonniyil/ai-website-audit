@@ -50,6 +50,10 @@ docker run --rm -p 127.0.0.1:8000:8000 --env-file .env website-audit
 
 Open http://127.0.0.1:8000. For a hosted deployment, use the Dockerfile on a container host and configure container port 8000, the environment secrets, and `/api/health` as the health check. Place the service behind an authenticated HTTPS gateway with request rate limits and outbound network rules denying private, link-local, metadata, and infrastructure ranges. Allow outbound DNS, public HTTP(S), and xAI HTTPS. The app has no built-in accounts, quotas, or billing.
 
+### Vercel
+
+`vercel.json` builds the React app into `frontend/dist` (served as static files) and runs the FastAPI backend as a Python serverless function (`api/index.py`) for every `/api/*` request. Import the GitHub repository in Vercel (no framework preset; settings come from `vercel.json`) and add the environment variables `XAI_API_KEY`, `XAI_MODEL` and, for a non-xAI provider, `XAI_BASE_URL`. Production deployments are public, so anyone with the URL can run audits that use your AI key; restrict access with Vercel Deployment Protection or remove the key if that is a concern.
+
 ## Scope and architecture
 
 - `frontend/` contains the UI and report exports.
